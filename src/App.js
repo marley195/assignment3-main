@@ -19,13 +19,17 @@ function App() {
       // Send request to backend
       const response = await axios.post(
         "http://127.0.0.1:8000/predict", // Corrected model_choice
-        JSON.stringify(inputData), // Send inputData directly
-        { headers: { "Content-Type": "application/json" } } // Explicitly set Content-Type to JSON
+        inputData, // Send inputData directly
+        {
+          headers: { "Content-Type": "application/json" },
+        }
       );
       console.log("Sending input data:", inputData);
       // Set response data in state
-      setAqiPrediction(response.data.aqi_prediction);
-      setAqiCategory(response.data.aqi_category);
+      setAqiPrediction(response.data[0]);
+      console.log(response.data[0]);
+      setAqiCategory(response.data[1]);
+      console.log(response.data[1]);
     } catch (error) {
       console.error("Error fetching prediction or classification:", error);
       setError("Failed to fetch data from backend. Please try again.");
@@ -51,7 +55,7 @@ function App() {
 
       {Object.keys(inputData).length > 0 && (
         <>
-          {aqiPrediction !== null && (
+          {aqiPrediction !== null && aqiPrediction !== undefined && (
             <Typography variant="h6">
               Predicted AQI: {aqiPrediction.toFixed(2)}
             </Typography>

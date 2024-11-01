@@ -25,21 +25,7 @@ function InputForm({ onSubmit }) {
     if (value <= 400) return "#d32f2f"; // Very Poor
     return "#b71c1c"; // Severe
   };
-  const handleFormSubmit = (inputData) => {
-    // Log the data to ensure it's correct
-    console.log("Sending input data:", inputData);
 
-    try {
-      const response = axios.post("http://127.0.0.1:8000/predict", inputData);
-      setAqiPrediction(response.data.rating);
-      setAqiCategory(response.data.rating_label);
-    } catch (error) {
-      console.error("Error fetching prediction or classification:", error);
-      setError("Failed to fetch data from backend. Please try again.");
-      setAqiPrediction(null);
-      setAqiCategory(null);
-    }
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({
@@ -51,7 +37,7 @@ function InputForm({ onSubmit }) {
       NOx: nox,
       O3: o3,
       PM10: pm10,
-      PM2_5: pm2_5, // Note underscore for consistency with API model
+      "PM2.5": pm2_5, // Note underscore for consistency with API model
       SO2: so2,
       Toluene: toluene,
       Xylene: xylene,

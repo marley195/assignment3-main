@@ -93,7 +93,7 @@ def predict(input_data: AirQualityInput):
     rating = prediction[0]
     # Interpret the prediction
     #rating_label = interpret_rating(rating)
-    return {"rating": rating, "rating_label": rating_label}
+    return {rating, rating_label}
 
 
 ## Middleware for logging requests
